@@ -1,6 +1,6 @@
 import OpenAI from "openai";
 
-const OpenAIClient = new OpenAI({
+const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
@@ -15,7 +15,7 @@ Return the response in JSON format with the following structure:
 }
 Only return valid JSON, without markdown or extra text.`;
 
-  const response = await OpenAIClient.chat.completions.create({
+  const response = await openai.chat.completions.create({
     model: "gpt-4o-mini",
     messages: [{ role: "user", content: prompt }],
     temperature: 0.7,
@@ -27,7 +27,7 @@ Only return valid JSON, without markdown or extra text.`;
 async function getIngredients(imageb64: string) {
   const prompt = `What are the cooking ingredients in this image?
 Return a response as a json list of strings without additional markdown or formatting.`;
-  const response = await OpenAIClient.chat.completions.create({
+  const response = await openai.chat.completions.create({
     model: "gpt-4o-mini",
     messages: [
       {
