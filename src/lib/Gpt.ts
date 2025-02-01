@@ -9,7 +9,7 @@ async function generateRecipe(ingredients: string[]) {
 ${ingredients.join(", ")}
 Return the response in JSON format with the following structure:
 {
-  "recipe": "<recipe name>",
+  "name": "<recipe name>",
   "description": "<short description of the dish>",
   "steps": ["<step 1>", "<step 2>", "..."]
 }

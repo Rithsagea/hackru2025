@@ -1,8 +1,8 @@
-import { generateRecipe, getIngredients } from "@/lib/gpt";
+import { generateRecipe, getIngredients } from "@/lib/Gpt";
 import Elysia from "elysia";
 
 interface RecipeInput {
-  items: string[];
+  ingredients: string[];
 }
 
 interface IngredientsInput {
@@ -13,7 +13,8 @@ const app = new Elysia({ prefix: "/api" })
   .get("/", () => "hello world!")
   .post(
     "/recipe",
-    async ({ body }: { body: RecipeInput }) => await generateRecipe(body.items),
+    async ({ body }: { body: RecipeInput }) =>
+      await generateRecipe(body.ingredients),
   )
   .post(
     "/ingredients",
