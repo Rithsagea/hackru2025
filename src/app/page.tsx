@@ -40,9 +40,16 @@ export default function Home() {
   };
 
   // Placeholder for the "Generate" button click
-  const handleGenerate = () => {
+  const handleGenerate = async () => {
     // Backend functionality will go here
-    console.log("Generate button clicked");
+    const recipe = await fetch("/api/recipe", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ items: materials })
+    });
+    setRecipeList([...recipeList, await recipe.json()])
   };
 
   return (
@@ -66,7 +73,7 @@ export default function Home() {
             ) : (
               recipeList.map((item, index) => (
                 <li key={index} className="flex justify-between items-center">
-                  {item}
+                  {JSON.stringify(item)}
                   <button
                     // Optionally, add a remove button here for the recipe list
                     className="text-red-500 hover:text-red-700 focus:outline-none"
