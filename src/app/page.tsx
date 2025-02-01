@@ -10,6 +10,35 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null); // For error handling
   const [generatedRecipe, setGeneratedRecipe] = useState<any>(null); // To store the generated recipe
 
+  // Predefined example recipes
+  const exampleRecipes = [
+    {
+      title: "Spaghetti Carbonara",
+      image: "/images/carbonara.jpg", // Placeholder image
+      description: "A classic Italian pasta dish with eggs, cheese, pancetta, and pepper.",
+    },
+    {
+      title: "Chicken Stir Fry",
+      image: "/images/chicken-stir-fry.jpg", // Placeholder image
+      description: "A quick and healthy stir fry with chicken and mixed vegetables.",
+    },
+    {
+      title: "Vegetable Curry",
+      image: "/images/vegetable-curry.jpg", // Placeholder image
+      description: "A spicy, aromatic curry made with mixed vegetables and fragrant spices.",
+    },
+    {
+      title: "Caesar Salad",
+      image: "/images/caesar-salad.jpg", // Placeholder image
+      description: "A refreshing salad with romaine lettuce, croutons, and Caesar dressing.",
+    },
+    {
+      title: "Beef Tacos",
+      image: "/images/beef-tacos.jpg", // Placeholder image
+      description: "Delicious tacos filled with seasoned ground beef and topped with fresh ingredients.",
+    },
+  ];
+
   // Handle material input change
   const handleMaterialChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMaterial(e.target.value);
@@ -77,7 +106,7 @@ export default function Home() {
   };
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 min-h-screen p-8 sm:p-20 gap-16">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-16 p-8 sm:p-20 min-h-screen">
       {/* Full-width Title Section */}
       <div className="col-span-2 text-center sm:text-left mb-8">
         <h1 className="text-5xl font-bold text-gray-800">hackru 2025</h1>
@@ -93,11 +122,23 @@ export default function Home() {
           <h2 className="text-xl font-semibold text-gray-800">Recipe List</h2>
           <ul className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)] text-gray-800">
             {recipeList.length === 0 ? (
-              <li>No recipes added yet</li>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                {exampleRecipes.map((recipe, index) => (
+                  <li key={index} className="bg-white shadow-md rounded-lg p-4">
+                    <img
+                      src={recipe.image}
+                      alt={recipe.title}
+                      className="w-full h-40 object-cover rounded-lg mb-4"
+                    />
+                    <h3 className="font-semibold text-lg text-gray-800">{recipe.title}</h3>
+                    <p className="text-sm text-gray-600 mt-2">{recipe.description}</p>
+                  </li>
+                ))}
+              </div>
             ) : (
               recipeList.map((item, index) => (
                 <li key={index} className="flex justify-between items-center">
-                  {JSON.stringify(item)}
+                  {item}
                   <button
                     onClick={() => handleRemoveMaterial(index)} // Optionally, add a remove button here for the recipe list
                     className="text-red-500 hover:text-red-700 focus:outline-none"
