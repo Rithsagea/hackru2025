@@ -41,7 +41,7 @@ export default function Home() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ ingredients }),
+      body: JSON.stringify({ ingredients, recipeList }),
     });
     setRecipeList([...recipeList, await recipe.json()]);
   };
