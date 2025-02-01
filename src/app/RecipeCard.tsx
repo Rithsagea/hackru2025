@@ -7,7 +7,19 @@ interface CardProps {
 }
 
 function Card({ recipe }: CardProps) {
-  return <div> {JSON.stringify(recipe)}</div>;
+  return (
+    <div className="p-6 max-w-lg mx-auto bg-white rounded-xl shadow-md space-y-4">
+      <h1 className="text-2xl font-bold text-gray-900">{recipe.name}</h1>
+      <p className="text-gray-700">{recipe.description}</p>
+      <h2 className="text-xl font-semibold text-gray-800">Steps:</h2>
+      <ol className="list-decimal list-inside space-y-2 text-gray-700">
+        {recipe.steps.map((step, index) => (
+          <li key={index}>{step}</li>
+        ))}
+      </ol>
+    </div>
+  );// <div> {JSON.stringify(recipe)}</div>;
+  
 }
 
 export default function RecipeCard() {
