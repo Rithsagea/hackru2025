@@ -5,6 +5,7 @@ import RecipeCard from "./RecipeCard";
 import { Recipe } from "@/lib/Types";
 import IngredientsCard from "./IngredientsCard";
 import { Button } from "@/components/ui/button";
+import ImageCard from "./ImageCard";
 
 export const PageContext = createContext<{
   ingredients: string[];
@@ -14,9 +15,9 @@ export const PageContext = createContext<{
   setRecipeList: Dispatch<SetStateAction<Recipe[]>>;
 }>({
   ingredients: [],
-  setIngredients: () => {},
+  setIngredients: () => { },
   recipeList: [],
-  setRecipeList: () => {},
+  setRecipeList: () => { },
 });
 
 export default function Home() {
@@ -64,6 +65,7 @@ export default function Home() {
           <RecipeCard />
 
           <div className="flex flex-col items-start gap-3 m-2">
+            <ImageCard />
             <IngredientsCard />
             <Button onClick={handleGenerate}>Generate Recipe</Button>
           </div>
