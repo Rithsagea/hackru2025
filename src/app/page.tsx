@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import RecipeCard from "./RecipeCard";
+import { X } from "lucide-react";
 
 export default function Home() {
   const [material, setMaterial] = useState(""); // Store entered material
@@ -28,11 +29,6 @@ export default function Home() {
     }
   };
 
-  // Handle item removal from the materials list
-  const handleRemoveMaterial = (index: number) => {
-    setMaterials(materials.filter((_, i) => i !== index)); // Remove the item at the specified index
-  };
-
   const handleGenerate = async () => {
     // const recipe = await fetch("/api/recipe", {
     //   method: "POST",
@@ -43,6 +39,10 @@ export default function Home() {
     // });
     // setRecipeList([...recipeList, await recipe.json()]);
   };
+
+  const removeMaterial = (material: string) => {
+    setMaterials(materials.filter(s => s !== material));
+  }
 
   return (
     <div>
@@ -85,10 +85,13 @@ export default function Home() {
               />
               <Button onClick={handleMaterialSubmit}>Add</Button>
             </div>
-            <div className="flex my-2">
+            <div className="flex flex-wrap my-2">
               {materials.map(material =>
-                <div className="m-0.5 px-2 py-1 bg-gray-800 text-primary-foreground rounded-full" key={material}>
+                <div className="items-center flex m-0.5 px-2 py-1 bg-gray-800 text-primary-foreground rounded-full" key={material}>
                   {material}
+                  <button onClick={() => removeMaterial(material)}>
+                    <X className="ml-1" size={14} />
+                  </button>
                 </div>)
               }
             </div>
