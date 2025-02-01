@@ -1,7 +1,7 @@
 import Elysia from "elysia";
 
 const app = new Elysia({ prefix: "/api" })
-  .get("/", () => "test");
+  .get("/", () => "hello world!");
 
 export const GET = app.handle;
 export const POST = app.handle;
