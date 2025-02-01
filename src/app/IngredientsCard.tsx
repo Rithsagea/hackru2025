@@ -1,8 +1,8 @@
 import { Input } from "@/components/ui/input";
 import { useContext, useState } from "react";
-import { PageContext } from "./page";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
+import { PageContext } from "./Home";
 
 export default function IngredientsCard() {
   const { ingredients, setIngredients } = useContext(PageContext);

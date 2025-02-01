@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { PageContext } from "./page";
 import { Recipe } from "@/lib/Types";
+import { PageContext } from "./Home";
 
 interface CardProps {
   recipe: Recipe;
@@ -18,8 +18,7 @@ function Card({ recipe }: CardProps) {
         ))}
       </ol>
     </div>
-  );// <div> {JSON.stringify(recipe)}</div>;
-  
+  ); // <div> {JSON.stringify(recipe)}</div>;
 }
 
 export default function RecipeCard() {
