@@ -6,6 +6,9 @@ export default function Home() {
   const [material, setMaterial] = useState(""); // Store entered material
   const [materials, setMaterials] = useState<string[]>([]); // Store entered materials for the recipe input
   const [recipeList, setRecipeList] = useState<string[]>([]); // Store recipe list items
+  const [loading, setLoading] = useState(false); // For loading state during generation
+  const [error, setError] = useState<string | null>(null); // For error handling
+  const [generatedRecipe, setGeneratedRecipe] = useState<any>(null); // To store the generated recipe
 
   // Handle material input change
   const handleMaterialChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,18 +42,46 @@ export default function Home() {
     }
   };
 
-  // Placeholder for the "Generate" button click
-  const handleGenerate = () => {
-    // Backend functionality will go here
-    console.log("Generate button clicked");
+  // Handle Generate button click and trigger API call
+  const handleGenerate = async () => {
+    if (recipeList.length === 0) {
+      setError("Please add some materials to generate a recipe.");
+      return;
+    }
+
+    setLoading(true); // Set loading state
+    setError(null); // Clear previous errors
+
+    try {
+      const response = await fetch("/api/recipe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ items: recipeList }), // Sending recipe list as items
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to generate recipe");
+      }
+
+      const data = await response.json();
+      console.log("Generated recipe:", data);
+      setGeneratedRecipe(data); // Store the generated recipe
+
+    } catch (error) {
+      setError(error instanceof Error ? error.message : "An unknown error occurred.");
+    } finally {
+      setLoading(false); // Reset loading state
+    }
   };
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 min-h-screen p-8 sm:p-20 gap-16">
       {/* Full-width Title Section */}
       <div className="col-span-2 text-center sm:text-left mb-8">
-        <h1 className="text-5xl font-bold text-white">hackru 2025</h1>
-        <p className="text-lg text-white mt-4">
+        <h1 className="text-5xl font-bold text-gray-800">hackru 2025</h1>
+        <p className="text-lg text-gray-800 mt-4">
           A place to discover and share recipes that are easy to make and delicious to eat!
         </p>
       </div>
@@ -68,7 +99,7 @@ export default function Home() {
                 <li key={index} className="flex justify-between items-center">
                   {item}
                   <button
-                    // Optionally, add a remove button here for the recipe list
+                    onClick={() => handleRemoveMaterial(index)} // Optionally, add a remove button here for the recipe list
                     className="text-red-500 hover:text-red-700 focus:outline-none"
                   >
                     {/* Delete Button (optional) */}
@@ -151,10 +182,20 @@ export default function Home() {
           <button
             onClick={handleGenerate}
             className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-700 transition"
+            disabled={loading} // Disable button while loading
           >
-            Generate
+            {loading ? "Generating..." : "Generate"}
           </button>
         </div>
+
+        {/* Error or Success Message */}
+        {error && <p className="text-red-500 mt-4">{error}</p>}
+        {generatedRecipe && (
+          <div className="mt-4">
+            <h3 className="text-xl font-semibold">Generated Recipe</h3>
+            <pre className="bg-gray-100 p-4 mt-2 text-sm">{JSON.stringify(generatedRecipe, null, 2)}</pre>
+          </div>
+        )}
       </div>
     </div>
   );
