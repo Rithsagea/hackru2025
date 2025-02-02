@@ -20,20 +20,7 @@ export const PageContext = createContext<{
 
 export default function Home() {
   const [ingredients, setIngredients] = useState<string[]>([]);
-  const [recipeList, setRecipeList] = useState<Recipe[]>([
-    {
-      name: "Honey Garlic Butter Toast",
-      description:
-        "A delightful toast topped with a sweet and savory honey garlic butter spread.",
-      steps: [
-        "In a small bowl, mix softened butter, minced garlic, and honey until well combined.",
-        "Spread the honey garlic butter mixture generously on slices of bread.",
-        "Heat a skillet over medium heat and place the buttered bread slices in the pan.",
-        "Toast each side for about 2-3 minutes or until golden brown and crispy.",
-        "Remove from the skillet and serve warm, optionally drizzling with extra honey.",
-      ],
-    },
-  ]); // Store recipe list items
+  const [recipeList, setRecipeList] = useState<Recipe[]>([]);
 
   const handleGenerate = async () => {
     const recipe = await fetch("/api/recipe", {

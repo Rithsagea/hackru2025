@@ -2,7 +2,6 @@ import { generateRecipe, getIngredients } from "@/lib/Gpt";
 import { Recipe } from "@/lib/Types";
 import Elysia from "elysia";
 
-
 interface RecipeInput {
   ingredients: string[];
   recipeList: Recipe[];

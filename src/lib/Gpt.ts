@@ -1,14 +1,12 @@
 import OpenAI from "openai";
 import { Recipe } from "./Types";
-import { List } from "lucide-react";
-
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
 async function generateRecipe(ingredients: string[], recipeList: Recipe[]) {
-  const recipeNames = recipeList.map(recipe => recipe.name)
+  const recipeNames = recipeList.map((recipe) => recipe.name);
   const prompt = `Create a simple and delicious recipe using the following ingredients:
 ${ingredients.join(", ")} 
 that does not exist in the recipe list: ${recipeNames.join(", ")}
